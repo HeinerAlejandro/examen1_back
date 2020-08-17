@@ -55,17 +55,17 @@ var donantesRoutes = require('./routes/donantesRoutes');
 var censoRoutes = require('./routes/censoRoutes');
 
 
-mongoose.connection.openUri('mongodb://localhost:27017/examen1', (err, res) =>
+mongoose.connection.openUri('mongodb+srv://admin:admin@cluster0.vhlsq.gcp.mongodb.net/examen_web?retryWrites=true&w=majority', (err, res) =>
 {
   // si hay un error entonces
-  if (err) throw err;
+  //if (err) throw err;
 });
 
 // rutas
 // se ejecuta algo que se ejecuta antes del proceso de rutas
 app.use('/login', lgnRoutes); // Ruta de login
 app.use('/voluntario', voluntariosRoute); // Ruta de usuarios
-// app.use('/donantes', donantesRoutes); // Ruta de publicaciones
+app.use('/donantes', donantesRoutes); // Ruta de publicaciones
 // app.use('/censo', censoRoutes); // Ruta de publicaciones
 
 // app.use('/find', fndRoutes); //Ruta de busqueda de archvos
