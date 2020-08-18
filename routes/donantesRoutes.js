@@ -81,12 +81,12 @@ app.post('/', (req, res, next) => {
 
 
 app.get('/', (req, res, next) => {
-
+    
     Donacion.aggregate([{
-        "$lookup" : {
+        $lookup : {
             from : 'Voluntarios',
             localField : 'cedula',
-            foreignField : 'cedula', 
+            foreignField : 'Cedula', 
             as : 'donante'
         }
     }]).exec((err, donaciones) => {
