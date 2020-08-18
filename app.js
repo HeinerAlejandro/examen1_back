@@ -58,7 +58,7 @@ var censoRoutes = require('./routes/censoRoutes');
 mongoose.connection.openUri('mongodb+srv://admin:admin@cluster0.vhlsq.gcp.mongodb.net/examen_web?retryWrites=true&w=majority', (err, res) =>
 {
   // si hay un error entonces
-  //if (err) throw err;
+  if (err) throw err;
 });
 
 // rutas
