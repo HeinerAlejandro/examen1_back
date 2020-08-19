@@ -28,7 +28,7 @@ app.put("/", async (req, res, next) => {
     },
     (error, doc) => {
       if (error)
-        return res.status(400).json({ error: "Error findOneAndUpdate" });
+        return res.status(400).json({ error: "Error findIdAndUpdate" });
 
       console.log(doc);
       return res.status(200).json(doc);
