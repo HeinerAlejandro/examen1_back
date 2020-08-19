@@ -126,4 +126,18 @@ app.get("/:id", (req, res, next) => {
   });
 });
 
+app.delete("/delete/:id", (req, res, next) => {
+  const id = req.params.id;
+
+  Donacion.findByIdAndRemove(id, (error, doc) => {
+    if (!error) {
+      console.log(doc);
+      return res.status(200).json({ status: true });
+    } else {
+      console.log(error);
+      return res.status(400).json({ status: false });
+    }
+  });
+});
+
 module.exports = app;
