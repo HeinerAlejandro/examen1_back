@@ -11,32 +11,47 @@ var json = {
   data: "OK, Im route",
 };
 
-app.put("/", (req, res, next) => {
+app.put("/", async (req, res, next) => {
   var body = req.body;
 
-  var donacion = new Donacion({
+  var donacion = {
     cedula: body.cedula,
     banco: body.banco,
     fecha: body.fecha,
-  });
+  };
 
-  console.log("Donacion Actualizada", donacion);
+  await Donacion.findByIdAndUpdate(
+    { _id: body._id },
+    donacion,
+    {
+      new: true,
+    },
+    (error, doc) => {
+      if (error)
+        return res.status(400).json({ error: "Error findOneAndUpdate" });
 
-  donacion.save((error, donacion) => {
-    if (error) {
-      json.message = error;
-      json.data = null;
-      json.status = 400;
-      json.ok = false;
-      return res.status(400).json(json);
+      console.log(doc);
+      return res.status(200).json(doc);
     }
+  );
 
-    json.message = `Donacion registrada`;
-    json.data = null;
-    json.status = 201;
-    json.ok = true;
-    return res.status(201).json(json);
-  });
+  // console.log("Donacion Actualizada", donacion);
+
+  // donacion.save((error, donacion) => {
+  //   if (error) {
+  //     json.message = error;
+  //     json.data = null;
+  //     json.status = 400;
+  //     json.ok = false;
+  //     return res.status(400).json(json);
+  //   }
+
+  //   json.message = `Donacion registrada`;
+  //   json.data = null;
+  //   json.status = 201;
+  //   json.ok = true;
+  //   return res.status(201).json(json);
+  // });
 });
 
 app.post("/", (req, res, next) => {
@@ -89,7 +104,7 @@ app.get("/", (req, res, next) => {
     json.message = "Donaciones encontradas";
     json.data = donaciones;
 
-    console.log("todas donaciones", donaciones);
+    // console.log("todas donaciones", donaciones);
 
     if (donaciones.length == 0) {
       json.message = "donaciones no registradas";
@@ -99,6 +114,15 @@ app.get("/", (req, res, next) => {
     json.status = 200;
     json.ok = true;
     return res.status(200).json(json);
+  });
+});
+
+app.get("/:id", (req, res, next) => {
+  const id = req.params.id;
+
+  Donacion.findById(id, (error, data) => {
+    if (error) return next(error);
+    res.json(data);
   });
 });
 
